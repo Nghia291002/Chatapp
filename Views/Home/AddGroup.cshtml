@@ -1,0 +1,54 @@
+﻿@model Chatapp.Models.GROUP
+
+@{
+    ViewBag.Title = "AddGroup";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+<style>
+    body {
+        font-family: 'Times New Roman', sans-serif;
+        background-image: url('https://d2w9rnfcy7mm78.cloudfront.net/12848379/original_cec351b75e6f0fd55086ba5d6451b681.gif?1629024498');
+    }
+
+    .form-container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: rgba(0, 0, 0, 0.2);
+        color: antiquewhite;
+    }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-container button {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+</style>
+
+<body>
+    <div class="form-container">
+        <h2>Tạo Nhóm</h2>
+        <form action="/home/addgroup" method="post">
+            <div class="mb-3">
+                <label for="username" class="form-label">Tên nhóm</label>
+                <input type="text" class="form-control" id="groupname" name="groupname" placeholder="Tên nhóm" minlength="2" style=" margin: 0 auto" required>
+            </div>
+            <div class="mb-3">
+                <label for="username" class="form-label">Tên Bạn bè</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Tên bạn bè" minlength="2" style=" margin: 0 auto" required>
+            </div>
+            @if (ViewBag.Fail != null)
+            {
+                <p class="text-right" style="color:red">@ViewBag.Fail</p>
+            }
+            <button type="submit" class="btn btn-primary w-80">Tạo</button>
+            <a href="/account/login" class="btn btn-primary">Thoát</a>
+        </form>
+</body>

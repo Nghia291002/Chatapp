@@ -1,0 +1,123 @@
+﻿@*@model Chatapp.Models.USER*@
+
+@{
+    ViewBag.Title = "Forgot";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Forgot</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgb(255, 255, 255);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(127, 255, 212, 0.33);
+            border-radius: 10px;
+        }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: rgb(55, 55, 55);
+            }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background-color: rgba(7, 62, 138, 0.286);
+            background-attachment: fixed;
+            font-family: 'Roboto',sans-serif;
+            font-size: 20px;
+            border-radius: 20px;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 16px;
+        }
+
+        .modal-body {
+            height: 300px;
+            border: 1px solid black;
+            overflow: auto;
+            font-size: 16px;
+        }
+
+        .modal-header {
+            background-color: rgba(127, 255, 212, 0.33);
+            background-attachment: fixed;
+            font-family: 'Roboto';
+        }
+
+        .modal-body input[type="text"] {
+            border-width: 2px;
+            border-style: hidden hidden solid hidden;
+            border-color: rgba(0, 0, 0, 0.636);
+        }
+
+        .modal-footer {
+            height: 60px;
+        }
+
+        .next {
+            bottom: 0;
+            position: sticky;
+            float: right;
+            color: rgb(0, 57, 79);
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: medium;
+        }
+    </style>
+</head>
+<body>
+    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">Add device</button>
+    <!--Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <!--can giua phuong thuc theo chieu doc-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="exampleModalLabel">Add new device</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="password" class="form-label">Mật khẩu</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu" minlength="8" style=" margin: 0 auto" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password" class="form-label">Xác nhận mật khẩu</label>
+                            <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" placeholder="Xác nhận mật khẩu" style=" margin: 0 auto" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+

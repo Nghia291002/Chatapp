@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="~/Content/image/favicon.ico">
+    @*<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>*@
+    <style>
+        .navbar-brand {
+            margin-left: 20px;
+            font-display: block;
+            font-size: 30px;
+        }
+
+        .logout {
+            position: absolute;
+            top: 25px;
+            right: 60px;
+            color: HighlightText;
+            font-style: initial;
+            text-decoration: none;
+        }
+
+            .logout:hover {
+                color: red;
+            }
+
+        #logo {
+            color: salmon;
+            position: relative;
+            text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+        }
+
+        .topright {
+            position: absolute;
+            top: 25px;
+            right: 150px;
+            color: aquamarine;
+            font-style: italic;
+        }
+    </style>
+
+</head>
+<body>
+    <nav class=" navbar navbar-expand-sm bg-dark navbar-dark">
+        <a class="navbar-brand" id="logo">CHATWEB</a>
+        <div class="collapse navbar-collapse d-flex">
+            <ul class="navbar-nav mr-r">
+                <li class="nav-item">
+                    <a class="nav-link" href="/home/index">Trang chủ</a>
+                </li>
+                @*<li class="nav-item">
+                        <a class="nav-link" href="/home/search">Tìm kiếm</a>
+                    </li>*@
+                <li class="nav-item">
+                    <a class="nav-link" href="/home/addgroup">Tạo nhóm</a>
+                </li>
+                @if (@ViewBag.UserName != null)
+                {
+                    <li class="nav-item">
+                        <a class="topright" style="text-decoration: none">Xin chào @ViewBag.UserName</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="logout" href="/account/logout">Đăng xuất</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="logout" href="/account/login">Đăng nhập</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </nav>
+    <div class="col-12" style="height:100%;">
+        @RenderBody()
+        @*<hr />
+        <footer>
+            <p style="color:#d5a838">&copy; @DateTime.Now.Year - NguyenNghia</p>
+        </footer>*@
+    </div>
+   
+</body>
+@RenderSection("Scripts", required:false)
+</html>

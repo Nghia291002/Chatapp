@@ -1,0 +1,41 @@
+﻿@model List<Chatapp.Models.USER>
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ <style>
+     body {
+         font-family: 'Times New Roman', sans-serif;
+         background-image: url('https://d2w9rnfcy7mm78.cloudfront.net/12848379/original_cec351b75e6f0fd55086ba5d6451b681.gif?1629024498');
+        color:darkorange;
+     }
+     
+ </style>
+
+ <body>
+     <h2>Search</h2>
+
+     <form class="d-flex flex-row align-items-center flex-wrap" action="/home/search">
+         <label for="search" class="mx-2 my-1">Search</label>
+         <input type="search"
+                class="form-control w-auto"
+                id="search"
+                name="search"
+                value="@ViewBag.Search"
+                placeholder="Search" />
+         <button type="button" class="btn btn-info">
+             <span class="glyphicon glyphicon-search"></span> Search
+         </button>
+
+     </form>
+     <div>
+         <ol>
+             @foreach (var item in Model)
+             {
+                 <li>@item.USERNAME</li>
+             }
+         </ol>
+     </div>
+ </body>
