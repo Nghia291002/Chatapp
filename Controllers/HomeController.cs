@@ -11,6 +11,7 @@ using Microsoft.AspNet.SignalR;
 using Chatapp.Filters;
 using System.Web.UI.WebControls;
 using System.Text.RegularExpressions;
+using Chatapp.ViewModel;
 
 namespace Chatapp.Controllers
 {
@@ -167,6 +168,13 @@ namespace Chatapp.Controllers
             var id = db.GROUPS.Where(u => u.GROUP_NAME == groupname).Select(u => u.GROUP_ID).FirstOrDefault();
             List<MESSAGE> hi = db.MESSAGEs.ToList();
 
+            var users = db.GROUP_ACCOUNTS.Where(u => u.GROUP_ID == id).Select(u => u.USER_ID).ToList();
+
+            var ids = db.USERs.Where(u =>!(users.Contains(u.USER_ID))).ToList();
+
+            //var  = db.USERs.Where(u => nameids.Contains(userID)).Select(u => u.USERNAME).ToList();
+
+            ViewBag.namefriends = ids;
             ViewBag.UserName = userName;
             ViewBag.UserID = userID;
             ViewBag.groupheader = Session["groupname"];
@@ -174,44 +182,49 @@ namespace Chatapp.Controllers
             ViewBag.grouplist = Session["group"];
             ViewBag.chat = hi;
             return View(hi);
+
         }
         [HttpPost]
-        public ActionResult SendChat(string text, string groupname)
+        public ActionResult SendChat(string text, string groupname,decimal? id)
         {
-            var id = (decimal)Session["User_ID"];
+            var ids = (decimal)Session["User_ID"];
             CHAT_WEBEntities2 db = new CHAT_WEBEntities2();
             var nameid = db.GROUPS.Where(u => u.GROUP_NAME == groupname).Select(u => u.GROUP_ID).FirstOrDefault();
 
-            var find = db.GROUP_ACCOUNTS.Where(u => u.USER_ID == id && u.GROUP_ID == nameid).Select(u => u.GROUP_ACCOUNT_ID).FirstOrDefault();
+            var find = db.GROUP_ACCOUNTS.Where(u => u.USER_ID == ids && u.GROUP_ID == nameid).Select(u => u.GROUP_ACCOUNT_ID).FirstOrDefault();
             if (Session["User_ID"] != null)
             {
+                if(id != null)
+                {
+                    GROUP_ACCOUNTS add = new GROUP_ACCOUNTS
+                    {
+                        USER_ID = id,
+                        GROUP_ID = nameid
+                    };
+                    db.GROUP_ACCOUNTS.Add(add);
+                    db.SaveChanges();
+                    return RedirectToAction("Chat", new { groupname = groupname });
+                }
                     MESSAGE message = new MESSAGE
                     {
                         GROUP_ACCOUNT_ID = find,
                         TEXT = text
                     };
+                    db.MESSAGEs.Add(message);
+                    db.SaveChanges();
+                    chatHub chat = new chatHub();
+                    chat.send(Session["UserName"].ToString(), text);
 
-                    // Kiểm tra db không phải là null
-                    //if (db != null)
-                    //{
-                        db.MESSAGEs.Add(message);
-                        db.SaveChanges();
-                        chatHub chat = new chatHub();
-                        chat.send(Session["UserName"].ToString(), text);
-                    //}
-                    //else
-                    //{
-                    //    // Xử lý lỗi khi db là null
-                    //    throw new InvalidOperationException("Database context is null.");
-                    //}
 
-                    return RedirectToAction("Chat", new {groupname = groupname});
+                    return RedirectToAction("Chat", new { groupname = groupname });
+                    
             }
             else
             {
                 return RedirectToAction("Login", "Account");
             }
-
+            
+            
         }
     }
 }

@@ -5,6 +5,12 @@
 }
 <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+
     <script>
         window.onload = function () {
             var messageContainer = document.getElementById('message');
@@ -52,20 +58,19 @@
             display: flex;
             flex-direction: column;
             border-right: 1px solid #333;
+            border-right-style:revert-layer;
+            border-color:goldenrod;
         }
 
         .header {
-            /*margin-bottom: 20px;
-            font-size: 30px;
-            background-color: #2b2a2ae6;
-            text-align: center;*/
-            /*            padding:30px 20px 20px 20px;*/
-            /*height: 10%;*/
             padding: 15px;
             font-size: 18px;
             background-color: #333;
             text-align: center;
             margin-bottom: 20px;
+            border-color: #ff0000;
+            border-bottom-style: double;
+            border-right-style: solid;
         }
 
         .chat-list {
@@ -83,11 +88,18 @@
             background-color: #2e2e2e;
             border-radius: 10px;
             transition: background-color 0.3s;
+            border-color: #863398;
+            border-right-style: double;
         }
 
-            .chat-item:hover {
-                background-color: #454545;
-            }
+        .material-icons {
+            top: 20px;
+            right: 30px;
+        }
+
+        .chat-item:hover {
+            background-color: #454545;
+        }
 
         .avatar {
             width: 40px;
@@ -97,7 +109,6 @@
         }
 
         .chat-info {
-           
             flex: 1;
         }
 
@@ -114,15 +125,15 @@
         .chat-window {
             width: 75%;
             display: flex;
-            height:100%;
-            overflow:auto;
+            height: 100%;
+            overflow: auto;
             flex-direction: column;
             background-color: #3e3e3e;
         }
 
         .chat-header {
             display: flex;
-            height:12%;
+            height: 12%;
             align-items: center;
             padding: 15px;
             background-color: #333;
@@ -140,7 +151,7 @@
 
         .messages {
             padding: 20px;
-            height:80%;
+            height: 80%;
             overflow: auto;
             background-color: #4e4e4e;
         }
@@ -195,6 +206,30 @@
             .send-button:hover {
                 color: #0056b3;
             }
+
+        input[type=checkbox] {
+            width: 100%;
+            right: auto;
+            top: 100px;
+        }
+
+        p {
+            width: 100%;
+            color: chocolate;
+            font-size: large;
+            right: 50px;
+            border-block-color: aqua;
+        }
+
+        .modal-body {
+            width: 60vw;
+        }
+
+        .send-add {
+            border-radius: 5px;
+            background-color: black;
+            border-color: red;
+        }
     </style>
 </head>
 <div class="chat-app">
@@ -221,6 +256,7 @@
                 <div class="chat-name">@ViewBag.groupheader</div>
                 <div class="chat-status">Đang hoạt động</div>
             </div>
+            <button class="send-add"><a href="#" data-toggle="modal" data-target="#exampleModal"><i class="material-icons" style="font-size:25px;color:#ff0000">add</i></a></button>
         </div>
 
         <div class="messages" id="message">
@@ -234,6 +270,7 @@
                         <div class="message received">
 
                             <img src="~/Content/image/avatar.jfif" alt="avatar" class="avatar" />
+                            <div name="name" >@item.GROUP_ACCOUNTS.USER.USERNAME </div>
                             <div class="message-content"> @item.TEXT </div>
                         </div>
                     }
@@ -252,11 +289,40 @@
             <div class="input-area">
                 <input type="hidden" value="@ViewBag.groupheader" name="groupname" />
                 <input type="text" class="message-input" placeholder="Aa" id="text" name="text" required>
-                <button class="send-button"><i class="material-icons" style="font-size:25px;color:lightpink">local_airport</i></button>
+                <button class="send-button" ><i class="material-icons" style="font-size:25px;color:lightpink">local_airport</i></button>
             </div>
         </form>
     </div>
 </div>
+<!--Modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <!--can giua phuong thuc theo chieu doc-->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#615555">
+                <h2 class="modal-title" id="exampleModalLabel" style="color:#63f8e7">Thêm Thành Viên </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="@Url.Action("SendChat", "Home")" method="post">
+                <div class="modal-body">
+                    @foreach(var user in ViewBag.namefriends)
+                    {
+                        <input type="checkbox" name="id" value="@user.USER_ID" /><p >@user.USERNAME</p>
+                     
+                    }
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" value="@ViewBag.groupheader" name="groupname" />
+                    <button type="submit" class="btn btn-primary w-80">Thêm</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 @section Scripts{
 
@@ -278,7 +344,7 @@
                         $(".messages").append("<div class='message sent'><div class='message-content'>" + message + "</div></div>");
                     }
                     else {
-                        $(".messages").append("<div class='message received'><img src="~/Content/image / avatar.jfif" alt="avatar" class="avatar" /><div class='message-content'>" + message + "</div></div>");
+                        $(".messages").append("<div class='message received'><img src="~/Content/image / avatar.jfif" /><div class='message-content'>" + message + "</div></div>");
                     }
                 };
             }

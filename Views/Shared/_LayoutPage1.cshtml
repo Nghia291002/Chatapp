@@ -2,13 +2,14 @@
 
 <html>
 <head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <meta charset="utf-8" />
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="~/Content/image/favicon.ico">
     @*<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
-    <script src="~/Scripts/modernizr-2.6.2.js"></script>*@
+        <script src="~/Scripts/modernizr-2.6.2.js"></script>*@
     <style>
         .navbar-brand {
             margin-left: 20px;
@@ -17,9 +18,6 @@
         }
 
         .logout {
-            position: absolute;
-            top: 25px;
-            right: 60px;
             color: HighlightText;
             font-style: initial;
             text-decoration: none;
@@ -36,11 +34,57 @@
         }
 
         .topright {
-            position: absolute;
-            top: 25px;
-            right: 150px;
             color: aquamarine;
             font-style: italic;
+        }
+
+        .navbar {
+            border-color: #e73333;
+            border-bottom-style: outset;
+        }
+
+        .dropbtn {
+            background-color: #1c1c1c00;
+            color: HighlightText;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right:0;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            padding: 12px 16px;
+            z-index: 1;
+        }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #ebcece93;
+                }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #000000;
         }
     </style>
 
@@ -49,43 +93,44 @@
     <nav class=" navbar navbar-expand-sm bg-dark navbar-dark">
         <a class="navbar-brand" id="logo">CHATWEB</a>
         <div class="collapse navbar-collapse d-flex">
+
+
             <ul class="navbar-nav mr-r">
                 <li class="nav-item">
                     <a class="nav-link" href="/home/index">Trang chủ</a>
                 </li>
-                @*<li class="nav-item">
-                        <a class="nav-link" href="/home/search">Tìm kiếm</a>
-                    </li>*@
+
                 <li class="nav-item">
                     <a class="nav-link" href="/home/addgroup">Tạo nhóm</a>
                 </li>
+
+            </ul>
+
+        </div>
+        <div class="dropdown" style="float:right;">
+            <button class="dropbtn"><i class="material-icons" style="font-size:35px;color:#00ffa9">account_circle</i></button>
+            <div class="dropdown-content">
                 @if (@ViewBag.UserName != null)
                 {
-                    <li class="nav-item">
-                        <a class="topright" style="text-decoration: none">Xin chào @ViewBag.UserName</a>
-                    </li>
+                    <a class="topright" style="text-decoration: none">Xin chào @ViewBag.UserName</a>
+                    <a class="logout" href="/account/logout">Đăng xuất</a>
+                    <a class="logout" href="/account/forgot">Đổi mật khẩu</a>
 
-                    <li class="nav-item">
-                        <a class="logout" href="/account/logout">Đăng xuất</a>
-                    </li>
                 }
                 else
                 {
-                    <li class="nav-item">
-                        <a class="logout" href="/account/login">Đăng nhập</a>
-                    </li>
+
+                    <a class="logout" href="/account/login">Đăng nhập</a>
+
                 }
-            </ul>
+            </div>
         </div>
     </nav>
     <div class="col-12" style="height:100%;">
         @RenderBody()
-        @*<hr />
-        <footer>
-            <p style="color:#d5a838">&copy; @DateTime.Now.Year - NguyenNghia</p>
-        </footer>*@
+
     </div>
-   
+
 </body>
-@RenderSection("Scripts", required:false)
+@RenderSection("Scripts", required: false)
 </html>

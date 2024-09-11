@@ -91,11 +91,35 @@ namespace Chatapp.Controllers
             return View();
         }
 
-        public ActionResult Forgot(string username)
+        public ActionResult Forgot()
         {
+            string userName = (string)Session["UserName"];
+            var userID = (decimal)Session["User_ID"];
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Forgot(string password, string confirmpassword)
+        {
+            string username = (string)Session["UserName"];
+            if (password != confirmpassword)
+            {
+                ViewBag.Fail = "Xác nhận mật khẩu không đúng";
+                return View();
+            }
             CHAT_WEBEntities2 db = new CHAT_WEBEntities2();
-            USER user = db.USERs.Where(u => u.USERNAME == username).FirstOrDefault();
-            return View(user);
+            USER login = db.USERs.Where(u => u.USERNAME == username).FirstOrDefault();
+            if (login != null)
+            {
+                // Cập nhật mật khẩu của người dùng
+                login.PASSWORD = password;
+
+                // Lưu thay đổi vào cơ sở dữ liệu
+                db.SaveChanges();
+                ViewBag.done = "Thay đổi mật khẩu thành công";
+            }
+            //return RedirectToAction("Index", "Home");
+            return View();
+
         }
 
         public ActionResult Logout()
