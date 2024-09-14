@@ -11,6 +11,9 @@
     @*<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
         <script src="~/Scripts/modernizr-2.6.2.js"></script>*@
     <style>
+        .navbar{
+            height:10vh;
+        }
         .navbar-brand {
             margin-left: 20px;
             font-display: block;
@@ -34,7 +37,7 @@
         }
 
         .topright {
-            color: aquamarine;
+            color:#de2e2e;
             font-style: italic;
         }
 
@@ -112,9 +115,9 @@
             <div class="dropdown-content">
                 @if (@ViewBag.UserName != null)
                 {
-                    <a class="topright" style="text-decoration: none">Xin chào @ViewBag.UserName</a>
-                    <a class="logout" href="/account/logout">Đăng xuất</a>
+                    <div class="topright" style="text-decoration: none">Xin chào @ViewBag.UserName</div>
                     <a class="logout" href="/account/forgot">Đổi mật khẩu</a>
+                    <a class="logout" href="/account/logout">Đăng xuất</a>
 
                 }
                 else

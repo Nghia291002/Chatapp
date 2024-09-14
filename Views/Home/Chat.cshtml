@@ -5,10 +5,9 @@
 }
 <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
 
 
     <script>
@@ -19,9 +18,8 @@
     </script>
     <style>
         ::-webkit-scrollbar {
-            width: 10px;
+            width: 1px;
         }
-
         ::-webkit-scrollbar-track {
             background-color: darkgrey;
         }
@@ -45,24 +43,28 @@
             color: burlywood;
         }
 
-        .sender-name {
+        /*        .sender-name {
             font-size: 0.8em;
             color: tomato;
             margin-bottom: 4px;
             font-weight: bold;
-        }
+        }*/
 
         .sidebar {
             width: 25%;
+            height: 90vh;
+            overflow:auto;
             background-color: #1e1e1e;
             display: flex;
             flex-direction: column;
             border-right: 1px solid #333;
-            border-right-style:revert-layer;
-            border-color:goldenrod;
+            border-right-style: revert-layer;
+            border-color: goldenrod;
         }
 
         .header {
+            position: sticky;
+            top: 0;
             padding: 15px;
             font-size: 18px;
             background-color: #333;
@@ -73,18 +75,13 @@
             border-right-style: solid;
         }
 
-        .chat-list {
-            flex: 1;
-            overflow-y: auto;
-            padding: 10px;
-        }
-
         .chat-item {
             display: flex;
+            overflow:auto;
             align-items: center;
             padding: 10px;
             margin-bottom: 10px;
-            cursor: pointer;
+/*            cursor: pointer;*/
             background-color: #2e2e2e;
             border-radius: 10px;
             transition: background-color 0.3s;
@@ -101,6 +98,20 @@
             background-color: #454545;
         }
 
+        .chat-item::after {
+            display: flex;
+            align-items: center;
+            overflow: auto;
+            padding: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            background-color: #efefefa2;
+            border-radius: 10px;
+            transition: background-color 0.3s;
+            border-color: #863398;
+            border-right-style: double;
+        }
+
         .avatar {
             width: 40px;
             height: 40px;
@@ -109,12 +120,14 @@
         }
 
         .chat-info {
+            margin-left: 10px;        
             flex: 1;
         }
 
         .chat-name {
             font-weight: bold;
             margin-bottom: 5px;
+            font-size: 18px;
         }
 
         .chat-preview {
@@ -125,7 +138,7 @@
         .chat-window {
             width: 75%;
             display: flex;
-            height: 100%;
+            height: 90vh;
             overflow: auto;
             flex-direction: column;
             background-color: #3e3e3e;
@@ -140,34 +153,37 @@
             border-bottom: 1px solid #444;
         }
 
-        .chat-info {
-            margin-left: 10px;
-        }
-
-        .chat-name {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
         .messages {
             padding: 20px;
-            height: 80%;
+            height: 90vh;
             overflow: auto;
             background-color: #4e4e4e;
         }
 
         .message {
+            /*display: flex;*/
+            /*            flex-flow: column nowrap;*/
+            /*align-content: space-around;
+            margin-bottom: 20px;*/
             display: flex;
-            align-items: flex-start;
-            margin-bottom: 20px;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
         }
 
             .message.sent {
                 justify-content: flex-end;
             }
 
+        .message-name {
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
         .message-content {
-            max-width: 60%;
+            width: 200px;
+            word-wrap: break-word;
             padding: 10px;
             border-radius: 15px;
             background-color: #007bff;
@@ -208,13 +224,13 @@
             }
 
         input[type=checkbox] {
-            width: 100%;
-            right: auto;
-            top: 100px;
+            float: right;
+            margin-right: 50px;
+            accent-color: #fc4545;
         }
 
         p {
-            width: 100%;
+            width: 450px;
             color: chocolate;
             font-size: large;
             right: 50px;
@@ -222,7 +238,7 @@
         }
 
         .modal-body {
-            width: 60vw;
+            width: 950px;
         }
 
         .send-add {
@@ -254,75 +270,109 @@
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS4ItnHpJivB6Xyu0_DQnY43uFV1cNKc7TaA&s" alt="Avatar" class="avatar">
             <div class="chat-info">
                 <div class="chat-name">@ViewBag.groupheader</div>
-                <div class="chat-status">Đang hoạt động</div>
+                <div>Thành viên: @ViewBag.sum người</div>
             </div>
-            <button class="send-add"><a href="#" data-toggle="modal" data-target="#exampleModal"><i class="material-icons" style="font-size:25px;color:#ff0000">add</i></a></button>
+            @*<button class="send-add"><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="material-icons" style="font-size:25px;color:#ff0000">add</i></a></button>*@
+            <button class="send-add" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="material-icons" style="font-size:25px;color:#ff0000">add</i></button>
+            @if (ViewBag.UserName == ViewBag.User_admin)
+            {
+                <button class="send-add" data-bs-toggle="modal" data-bs-target="#exampleModal_delete"><i class="material-icons" style="font-size:25px;color:#ff0000">delete_forever</i></button>
+            }
+
         </div>
 
         <div class="messages" id="message">
             @foreach (var item in Model)
             {
-                if (item.GROUP_ACCOUNTS.GROUP_ID == ViewBag.groupid)
-                {
-
                     if (item.GROUP_ACCOUNTS.USER_ID != ViewBag.UserID)
                     {
                         <div class="message received">
 
                             <img src="~/Content/image/avatar.jfif" alt="avatar" class="avatar" />
-                            <div name="name" >@item.GROUP_ACCOUNTS.USER.USERNAME </div>
+                            <div class="message-name">
+                                @item.GROUP_ACCOUNTS.USER.USERNAME
                             <div class="message-content"> @item.TEXT </div>
                         </div>
+                    </div>
                     }
                     else
                     {
-                        <div class="message sent">
-                            <div class="message-content"> @item.TEXT </div>
-                        </div>
+                    <div class="message sent">
+                        <div class="message-content"> @item.TEXT </div>
+                    </div>
                     }
-                }
             }
-
         </div>
 
         <form action="@Url.Action("SendChat", "Home")" method="post">
             <div class="input-area">
                 <input type="hidden" value="@ViewBag.groupheader" name="groupname" />
                 <input type="text" class="message-input" placeholder="Aa" id="text" name="text" required>
-                <button class="send-button" ><i class="material-icons" style="font-size:25px;color:lightpink">local_airport</i></button>
+                <button class="send-button"><i class="material-icons" style="font-size:25px;color:lightpink">local_airport</i></button>
             </div>
         </form>
     </div>
 </div>
 <!--Modal-->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <!--can giua phuong thuc theo chieu doc-->
         <div class="modal-content">
             <div class="modal-header" style="background-color:#615555">
-                <h2 class="modal-title" id="exampleModalLabel" style="color:#63f8e7">Thêm Thành Viên </h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h2 class="modal-title" id="exampleModalLabel" style="color:#63f8e7">Thêm Thành Viên</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="@Url.Action("SendChat", "Home")" method="post">
+            <form action="@Url.Action("AddUsers", "Home")" method="post">
                 <div class="modal-body">
-                    @foreach(var user in ViewBag.namefriends)
-                    {
-                        <input type="checkbox" name="id" value="@user.USER_ID" /><p >@user.USERNAME</p>
-                     
-                    }
+                    <ul style="list-style-type: circle;">
+                        @foreach (var user in ViewBag.namefriends)
+                        {
+
+                            <li>
+                                <p> @user.USERNAME <input type="checkbox" name="ids" value="@user.USER_ID" /></p>
+                            </li>
+                        }
+                    </ul>
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" value="@ViewBag.groupheader" name="groupname" />
                     <button type="submit" class="btn btn-primary w-80">Thêm</button>
-
                 </div>
             </form>
         </div>
     </div>
 </div>
 
+<!--Modal-->
+<div class="modal fade" id="exampleModal_delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <!--can giua phuong thuc theo chieu doc-->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#615555">
+                <h2 class="modal-title" id="exampleModalLabel" style="color:#63f8e7">Xóa Thành Viên</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+           
+                <form action="@Url.Action("DeleteUsers", "Home")" method="post">
+                    <div class="modal-body">
+                        <ul style="list-style-type: circle;">
+                            @foreach (var user in ViewBag.User_id_delete)
+                            {
+
+                                <li>
+                                    <p> @user.USERNAME <input type="checkbox" name="ids_delete" value="@user.USER_ID" /></p>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" value="@ViewBag.groupheader" name="groupname" />
+                        <button type="submit" class="btn btn-primary w-80">Xóa</button>
+                    </div>
+                </form>
+</div>
+    </div>
+</div>
 
 @section Scripts{
 
@@ -337,14 +387,19 @@
 
             $.connection.hub.start().done();
 
-            chat.client.addNewMessageToPage = function (name, message,groupname) {
+            chat.client.addNewMessageToPage = function (name, message, groupname) {
                 console.log(message);
+                console.log(name);
+                console.log(groupname);
                 if (groupname == "@ViewBag.groupheader") {
                     if (name == "@ViewBag.UserName") {
                         $(".messages").append("<div class='message sent'><div class='message-content'>" + message + "</div></div>");
                     }
                     else {
-                        $(".messages").append("<div class='message received'><img src="~/Content/image / avatar.jfif" /><div class='message-content'>" + message + "</div></div>");
+                        $(".messages").append("<div class='message received'>" +
+                            " <img src='/Content/image/avatar.jfif' alt='avatar' class='avatar' />" +
+                            " <div class='' >" + name  +
+                            "<div class='message-content'>" + message + "</div>" + "</div>" + "</div>");
                     }
                 };
             }

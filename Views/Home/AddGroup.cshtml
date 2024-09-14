@@ -15,8 +15,8 @@
         margin: 0 auto;
         padding: 20px 30px;
         border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        background-color: rgba(0, 0, 0, 0.2);
+        box-shadow: 0 0 10px rgb(0, 0, 0, 0.70);
+        background-color: rgb(0, 0, 0, 0.2);
         color: antiquewhite;
     }
 
@@ -30,6 +30,10 @@
             margin-left: auto;
             margin-right: auto;
         }
+    .form {
+        box-shadow: 0 0 10px rgb(0, 0, 0, 0.9);
+        background-color: rgba(0, 0, 0, 0.6);
+    }
 </style>
 
 <body>
@@ -41,14 +45,21 @@
                 <input type="text" class="form-control" id="groupname" name="groupname" placeholder="Tên nhóm" minlength="2" style=" margin: 0 auto" required>
             </div>
             <div class="mb-3">
-                <label for="username" class="form-label">Tên Bạn bè</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="Tên bạn bè" minlength="2" style=" margin: 0 auto" required>
+                <ul style="list-style-type: circle;">
+                    @foreach (var user in ViewBag.namefriends)
+                    {
+
+                        <li>
+                            <div class="form" style="font-size:large;color:#00fbebdb;"> @user.USERNAME <input type="checkbox" style="float:right;accent-color:red;block-size:20px;" name="ids" value="@user.USER_ID" /></div>
+                        </li>
+                    }
+                </ul>
             </div>
             @if (ViewBag.Fail != null)
             {
                 <p class="text-right" style="color:red">@ViewBag.Fail</p>
             }
-            <button type="submit" class="btn btn-primary w-80">Tạo</button>
-            <a href="/account/login" class="btn btn-primary">Thoát</a>
+            <button type="submit" class="btn btn-primary w-80">Tạo Nhóm</button>
+            <a href="/account/login" class="btn btn-primary">Quay lại</a>
         </form>
 </body>

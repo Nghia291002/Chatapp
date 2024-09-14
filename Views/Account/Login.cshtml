@@ -14,22 +14,21 @@
     body {
         font-family: 'Times New Roman', sans-serif;
         background-image: url('https://d2w9rnfcy7mm78.cloudfront.net/12848379/original_cec351b75e6f0fd55086ba5d6451b681.gif?1629024498');
-        background-size: cover;
-        background-repeat: no-repeat;
         background-position: center;
+        height: 100vh;
     }
 
     .login-container {
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 100vh;
     }
 
     .login-box {
+        
         background-color: rgba(0, 0, 0, 0.1);
         padding: 20px;
-        border-radius: 8px;
+        border-radius: 20px;
         box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
         width: 100%;
         max-width: 400px;
@@ -41,11 +40,10 @@
         }
 
         .login-box input {
-            margin-bottom: 20px;
             display: flex;
             margin-left: auto;
             margin-right: auto;
-            margin-bottom: 20px;
+/*            margin-bottom: 20px;*/
             margin-top: 20px;
             max-width: 80%;
             padding: 20px;
@@ -53,7 +51,7 @@
 
         .login-box button {
             width: 80%;
-            margin: 0 10px 20px 10px;
+            margin: 20px 10px 20px 10px;
             background-color: #1877f2;
             border: none;
             padding: 10px;
@@ -81,7 +79,7 @@
                     <button type="submit">Đăng nhập</button>
                     @if (ViewBag.Fail != null)
                     {
-                        <p class="text-right" style="color:red;text-align:center;margin:20px">@ViewBag.Fail</p>
+                        <p class="text-right" style="color:red;text-align:center;">@ViewBag.Fail</p>
                     }
                     <p class="text-right" style="text-align:center"><a href="#" data-toggle="modal" data-target="#exampleModal">Bạn quên mật khẩu?</a></p>
 
@@ -133,7 +131,7 @@
                                 <label for="confirm-password" class="form-label">Xác nhận mật khẩu</label>
                                 <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" placeholder="Xác nhận mật khẩu" style=" margin: 0 auto" required>
                             </div>
-                            @if (ViewBag.Fails != null)
+                            @if (ViewBag.Fails != null || ViewBag.Fail != null)
                             {
                                 <p class="text-right" style="color:red">@ViewBag.Fails</p>
                             }

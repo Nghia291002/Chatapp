@@ -9,6 +9,21 @@
 <head>
 
     <style>
+        ::-webkit-scrollbar {
+            width: 1px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: darkgrey;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: aliceblue;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        }
         body {
             font-family: 'Times New Roman', sans-serif;
             margin: 0;
@@ -30,15 +45,19 @@
 
         .sidebar {
             width: 25%;
+            height: 90vh;
+            overflow: auto;
             background-color: #1e1e1e;
             display: flex;
             flex-direction: column;
             border-right: 1px solid #333;
-            border-color: #863398;
-            border-right-style: double;
+            border-right-style: revert-layer;
+            border-color: goldenrod;
         }
 
         .header {
+            position: sticky;
+            top: 0;
             padding: 15px;
             font-size: 18px;
             background-color: #333;

@@ -152,7 +152,7 @@
           </Key>
           <Property Name="USER_ID" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="USERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PASSWORD" Type="String" FixedLength="false" Unicode="true" MaxLength="200" />
           <NavigationProperty Name="GROUP_ACCOUNTS" Relationship="Self.FK_GROUP_ACCOUNTS_USER" FromRole="USER" ToRole="GROUP_ACCOUNTS" />
         </EntityType>
         <Association Name="FK_GROUP_ACCOUNTS_GROUPS">
